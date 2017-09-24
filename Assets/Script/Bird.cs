@@ -11,6 +11,8 @@ public class Bird : MonoBehaviour {
     private float currentTime;    //当前时间 
     private float lastTime;       //上次时间
     private Data D_ins;           //数据单例
+    bool moveRoam = false;        //漫游上下开关
+
 
     private static Bird birdInstance;   //鸟单例
 
@@ -41,7 +43,15 @@ public class Bird : MonoBehaviour {
 	void Update () {
 
         birdAnimation();
-        birdControl();
+
+        if (D_ins.gameBegin == true)
+        {
+            birdControl();
+        }
+        else
+        {
+            birdRoam();  //漫游
+        }
     }  
 
      void birdAnimation()  //鸟动画
@@ -62,11 +72,42 @@ public class Bird : MonoBehaviour {
         }
     }
 
+    void birdRoam()  //未开始游戏时漫游
+    {
+        if (D_ins.sp_bird.transform.position.y < 0)
+            moveRoam = true;   //上移        
+        else if (D_ins.sp_bird.transform.position.y > 3)
+            moveRoam = false;  //下移
+
+        var tempPos = D_ins.sp_bird.transform.position;
+
+        if (moveRoam == false)
+            D_ins.sp_bird.transform.position = new Vector2(tempPos.x, tempPos.y -= 0.005f);
+        else
+            D_ins.sp_bird.transform.position = new Vector2(tempPos.x, tempPos.y += 0.005f);
+
+        if (Input.GetMouseButtonDown(0))  //获取游戏开始指令
+        {
+            D_ins.gameBegin = true; //游戏开始
+            D_ins.sp_bird.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
+            //以下来自birdControl函数
+            D_ins.audio_swing.Play();           
+            D_ins.sp_bird.transform.rotation = Quaternion.Euler(0, 0, 30); //欧拉角
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;           
+            this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5.5f), ForceMode2D.Impulse);
+
+            //隐藏UI元素
+            D_ins.getReady.active = false;
+            D_ins.tip.active = false;
+        }
+    }
+
     void birdRotation()  //鸟静态旋转动作
     {
         if (D_ins.sp_bird.transform.rotation.z > -0.71)
         {
-            //Debug.Log(D_ins.sp_bird.transform.rotation.z);
             D_ins.sp_bird.transform.Rotate(new Vector3(0, 0, -110 * Time.deltaTime));
         }
     }
@@ -106,14 +147,10 @@ public class Bird : MonoBehaviour {
 
         D_ins.birdAlived = false;
 
-        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-
         foreach (var item in GameObject.FindGameObjectsWithTag("tube"))
         {
             item.GetComponent<BoxCollider2D>().isTrigger = true;
         }
-
-        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
         Invoke("refreshScene", 3);
 
@@ -134,6 +171,8 @@ public class Bird : MonoBehaviour {
         D_ins.now_score2.active = false;
         D_ins.now_score3.active = false;
         D_ins.now_score4.active = false;
+        D_ins.gameBegin = false;
+
     }
 
 }

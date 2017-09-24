@@ -23,6 +23,12 @@ public class Data : MonoBehaviour {
     public GameObject now_score2;
     public GameObject now_score3;
     public GameObject now_score4;
+    public GameObject tip;
+    public GameObject gameover;
+    public GameObject scorePanel;
+    public GameObject getReady;
+    public GameObject btnOk;
+
 
     //数据(括号内为默认值)
     public int Nowscore;                 //当前游戏得分（0）
@@ -38,6 +44,7 @@ public class Data : MonoBehaviour {
     public bool Tube1point;  //能否得分
     public bool Tube2point;  //能否得分
     public bool birdAlived;  //是否存活
+    public bool gameBegin;   //开始游戏
 
     //数据单例
     private static Data gameData;

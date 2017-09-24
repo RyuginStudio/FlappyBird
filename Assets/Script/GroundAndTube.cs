@@ -50,26 +50,29 @@ public class GroundAndTube : MonoBehaviour {
             D_ins.sp_ground1.transform.position = new Vector2(5.237f, ground1Pos.y);
         }
 
-        //=====================水管=====================//
-        D_ins.sp_tubeDown1.transform.position = new Vector2(D_ins.sp_tubeDown1.transform.position.x - D_ins.GroundAndTubeSpeed * Time.deltaTime, D_ins.sp_tubeDown1.transform.position.y);
-        D_ins.sp_tubeUp1.transform.position = new Vector2(D_ins.sp_tubeDown1.transform.position.x, D_ins.sp_tubeUp1.transform.position.y);
-        D_ins.sp_tubeDown2.transform.position = new Vector2(D_ins.sp_tubeDown2.transform.position.x - D_ins.GroundAndTubeSpeed * Time.deltaTime, D_ins.sp_tubeDown2.transform.position.y);
-        D_ins.sp_tubeUp2.transform.position = new Vector2(D_ins.sp_tubeDown2.transform.position.x, D_ins.sp_tubeUp2.transform.position.y);
+        if (D_ins.gameBegin == true)  //游戏开始时才刷新水管
+        {
+            //=====================水管=====================//
+            D_ins.sp_tubeDown1.transform.position = new Vector2(D_ins.sp_tubeDown1.transform.position.x - D_ins.GroundAndTubeSpeed * Time.deltaTime, D_ins.sp_tubeDown1.transform.position.y);
+            D_ins.sp_tubeUp1.transform.position = new Vector2(D_ins.sp_tubeDown1.transform.position.x, D_ins.sp_tubeUp1.transform.position.y);
+            D_ins.sp_tubeDown2.transform.position = new Vector2(D_ins.sp_tubeDown2.transform.position.x - D_ins.GroundAndTubeSpeed * Time.deltaTime, D_ins.sp_tubeDown2.transform.position.y);
+            D_ins.sp_tubeUp2.transform.position = new Vector2(D_ins.sp_tubeDown2.transform.position.x, D_ins.sp_tubeUp2.transform.position.y);
 
 
-        //===================二者刷新===================//
-        if (D_ins.sp_tubeDown1.transform.position.x < -D_ins.TubeDown1X)
-        {
-            D_ins.sp_tubeDown1.transform.position = new Vector2(D_ins.sp_tubeDown2.transform.position.x + D_ins.TubeLeftRightDistance, Random.Range(2.4f, 6.6f));
-            D_ins.sp_tubeUp1.transform.position = new Vector2(D_ins.sp_tubeDown1.transform.position.x, D_ins.sp_tubeDown1.transform.position.y - D_ins.TubeUpDownDistance);
-            D_ins.Tube1point = true;
-        }
-        if(D_ins.sp_tubeDown2.transform.position.x < -D_ins.TubeDown1X)
-        {
-            D_ins.sp_tubeDown2.transform.position = new Vector2(D_ins.sp_tubeDown1.transform.position.x + D_ins.TubeLeftRightDistance, Random.Range(2.4f, 6.6f));
-            D_ins.sp_tubeUp2.transform.position = new Vector2(D_ins.sp_tubeDown2.transform.position.x, D_ins.sp_tubeDown2.transform.position.y - D_ins.TubeUpDownDistance);
-            D_ins.Tube2point = true;
-        }
+            //===================二者刷新===================//
+            if (D_ins.sp_tubeDown1.transform.position.x < -D_ins.TubeDown1X)
+            {
+                D_ins.sp_tubeDown1.transform.position = new Vector2(D_ins.sp_tubeDown2.transform.position.x + D_ins.TubeLeftRightDistance, Random.Range(2.4f, 6.6f));
+                D_ins.sp_tubeUp1.transform.position = new Vector2(D_ins.sp_tubeDown1.transform.position.x, D_ins.sp_tubeDown1.transform.position.y - D_ins.TubeUpDownDistance);
+                D_ins.Tube1point = true;
+            }
+            if (D_ins.sp_tubeDown2.transform.position.x < -D_ins.TubeDown1X)
+            {
+                D_ins.sp_tubeDown2.transform.position = new Vector2(D_ins.sp_tubeDown1.transform.position.x + D_ins.TubeLeftRightDistance, Random.Range(2.4f, 6.6f));
+                D_ins.sp_tubeUp2.transform.position = new Vector2(D_ins.sp_tubeDown2.transform.position.x, D_ins.sp_tubeDown2.transform.position.y - D_ins.TubeUpDownDistance);
+                D_ins.Tube2point = true;
+            }
+        }       
 
     }
 
