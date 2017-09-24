@@ -39,9 +39,7 @@ public class Bird : MonoBehaviour {
 	void Update () {
 
         birdAnimation();
-
         birdControl();
-
     }  
 
      void birdAnimation()  //鸟动画
@@ -62,16 +60,33 @@ public class Bird : MonoBehaviour {
         }
     }
 
+    void birdRotation()  //鸟静态旋转动作
+    {
+        if (D_ins.sp_bird.transform.rotation.z > -0.71)
+        {
+            //Debug.Log(D_ins.sp_bird.transform.rotation.z);
+            D_ins.sp_bird.transform.Rotate(new Vector3(0, 0, -110 * Time.deltaTime));
+        }
+    }
+
      void birdControl() //用户操控
     {
         if (Input.GetMouseButtonDown(0) && D_ins.birdAlived == true)
         {
             D_ins.audio_swing.Play(); //播放音效
+
+            //向上旋转
+            D_ins.sp_bird.transform.rotation = Quaternion.Euler(0, 0, 30); //欧拉角
+
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
             if(this.transform.position.y < 5.5) //防止小鸟飞出上边界
             this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5.5f), ForceMode2D.Impulse);
+        }
+        else if(D_ins.sp_bird.transform.position.y > -3) //可下旋转临界值
+        {
+            birdRotation();
         }
     }
      
@@ -97,8 +112,6 @@ public class Bird : MonoBehaviour {
         }
 
         this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-
-        this.transform.rotation = Quaternion.Euler(0, 0, -90);
 
         Invoke("refreshScene", 3);
 
