@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//部分数据采用硬编码
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
