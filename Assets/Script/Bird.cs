@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Bird : MonoBehaviour {
+public class Bird : MonoBehaviour
+{
 
     private int bird_idx = 0;     //鸟帧动画
     private float currentTime;    //当前时间 
@@ -31,7 +32,8 @@ public class Bird : MonoBehaviour {
         birdInstance = this;
     }
 
-    void Start () {
+    void Start()
+    {
         lastTime = Time.time;
         D_ins = Data.getInstance();
 
@@ -39,8 +41,9 @@ public class Bird : MonoBehaviour {
         D_ins.now_score3.active = false;
         D_ins.now_score4.active = false;
     }
-	
-	void Update () {
+
+    void Update()
+    {
 
         birdAnimation();
 
@@ -52,9 +55,9 @@ public class Bird : MonoBehaviour {
         {
             birdRoam();  //漫游
         }
-    }  
+    }
 
-     void birdAnimation()  //鸟动画
+    void birdAnimation()  //鸟动画
     {
         if (D_ins.birdAlived == true)
         {
@@ -74,9 +77,9 @@ public class Bird : MonoBehaviour {
 
     void birdRoam()  //未开始游戏时漫游
     {
-        if (D_ins.sp_bird.transform.position.y < 0)
+        if (D_ins.sp_bird.transform.position.y < -0.45)
             moveRoam = true;   //上移        
-        else if (D_ins.sp_bird.transform.position.y > 3)
+        else if (D_ins.sp_bird.transform.position.y > 0.5)
             moveRoam = false;  //下移
 
         var tempPos = D_ins.sp_bird.transform.position;
@@ -92,10 +95,10 @@ public class Bird : MonoBehaviour {
             D_ins.sp_bird.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
             //以下来自birdControl函数
-            D_ins.audio_swing.Play();           
+            D_ins.audio_swing.Play();
             D_ins.sp_bird.transform.rotation = Quaternion.Euler(0, 0, 30); //欧拉角
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;           
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5.5f), ForceMode2D.Impulse);
 
             //隐藏UI元素
@@ -112,7 +115,7 @@ public class Bird : MonoBehaviour {
         }
     }
 
-     void birdControl() //用户操控
+    void birdControl() //用户操控
     {
         if (Input.GetMouseButtonDown(0) && D_ins.birdAlived == true)
         {
@@ -124,20 +127,22 @@ public class Bird : MonoBehaviour {
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
-            if(this.transform.position.y < 5.5) //防止小鸟飞出上边界
-            this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5.5f), ForceMode2D.Impulse);
+            if (this.transform.position.y < 5.5) //防止小鸟飞出上边界
+                this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5.5f), ForceMode2D.Impulse);
         }
-        else if(D_ins.sp_bird.transform.position.y > -3) //可下旋转临界值
+        else if (D_ins.sp_bird.transform.position.y > -3) //可下旋转临界值
         {
             birdRotation();
         }
     }
-     
+
     void OnCollisionEnter2D(Collision2D coll)
     {
         if (D_ins.birdAlived == true)
         {
             D_ins.audio_hit.Play();
+
+            Invoke("scorePanelDisplay", 1.5f);
 
             if (this.transform.position.y > -2.3)
             {
@@ -151,9 +156,6 @@ public class Bird : MonoBehaviour {
         {
             item.GetComponent<BoxCollider2D>().isTrigger = true;
         }
-
-        Invoke("refreshScene", 3);
-
     }
 
     void playDieAudio()
@@ -161,7 +163,28 @@ public class Bird : MonoBehaviour {
         D_ins.audio_die.Play(); //死亡坠落声
     }
 
-    void refreshScene()  //游戏结束刷新场景
+    public void scorePanelDisplay() //计分板显示
+    {
+        D_ins.now_score1.active = false;
+        D_ins.now_score2.active = false;
+        D_ins.now_score3.active = false;
+        D_ins.now_score4.active = false;
+
+        D_ins.gameover.active = true;
+        D_ins.btnOk.active = true;
+        D_ins.scorePanel.active = true;
+
+        D_ins.audio_swooshing.Play();
+
+    }
+
+    public void btn_ok_onClick()
+    {
+        D_ins.audio_swooshing.Play();
+        Invoke("refreshScene", 0.7f);
+    }
+
+    public void refreshScene()  //游戏结束刷新场景
     {
         SceneManager.LoadScene("MainScene");
         D_ins.Tube1point = true;  //重置开关
@@ -172,7 +195,6 @@ public class Bird : MonoBehaviour {
         D_ins.now_score3.active = false;
         D_ins.now_score4.active = false;
         D_ins.gameBegin = false;
-
     }
 
 }

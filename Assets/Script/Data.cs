@@ -73,6 +73,5 @@ public class Data : MonoBehaviour {
     void Update () {
 		
 	}
-
-   
+    
 }
