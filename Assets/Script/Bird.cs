@@ -142,6 +142,10 @@ public class Bird : MonoBehaviour
         {
             D_ins.audio_hit.Play();
 
+            //需要立刻让鸟不模拟=>模拟
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+
             Invoke("scorePanelDisplay", 1.5f);
 
             if (this.transform.position.y > -2.3)
