@@ -49,19 +49,19 @@ public class NowScore : MonoBehaviour {
             switch (i)  //改位值
             {
                 case 0:
-                    D_ins.now_score1.active = true;
+				    D_ins.now_score1.SetActive(true);
                     D_ins.now_score1.GetComponent<SpriteRenderer>().sprite = sprite;
                     break;
                 case 1:
-                    D_ins.now_score2.active = true;
+				    D_ins.now_score2.SetActive(true);
                     D_ins.now_score2.GetComponent<SpriteRenderer>().sprite = sprite;
                     break;
                 case 2:
-                    D_ins.now_score3.active = true;
+				    D_ins.now_score3.SetActive(true);
                     D_ins.now_score3.GetComponent<SpriteRenderer>().sprite = sprite;
                     break;
                 case 3:
-                    D_ins.now_score4.active = true;
+				    D_ins.now_score4.SetActive(true);
                     D_ins.now_score4.GetComponent<SpriteRenderer>().sprite = sprite;
                     break;
             }

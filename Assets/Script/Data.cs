@@ -28,6 +28,7 @@ public class Data : MonoBehaviour {
     public GameObject scorePanel;
     public GameObject getReady;
     public GameObject btnOk;
+	public GameObject medal;
 
 
     //数据(括号内为默认值)

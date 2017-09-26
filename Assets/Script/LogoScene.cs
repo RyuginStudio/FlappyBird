@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LogoScene : MonoBehaviour {
 
@@ -23,6 +24,6 @@ public class LogoScene : MonoBehaviour {
     }
     void jumpNextScene()
     {
-        Application.LoadLevel("MainScene");
+        SceneManager.LoadScene("MainScene");
     }
 }
