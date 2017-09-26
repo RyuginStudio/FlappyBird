@@ -23,16 +23,22 @@ public class Data : MonoBehaviour {
     public GameObject now_score2;
     public GameObject now_score3;
     public GameObject now_score4;
+	public GameObject high_score1; //最高记录
+	public GameObject high_score2;
+	public GameObject high_score3;
+	public GameObject high_score4;
     public GameObject tip;
     public GameObject gameover;
     public GameObject scorePanel;
     public GameObject getReady;
     public GameObject btnOk;
 	public GameObject medal;
+	public GameObject newRecord;
 
 
     //数据(括号内为默认值)
     public int Nowscore;                 //当前游戏得分（0）
+	public int LocalHighScore;           //本地最高得分
     public int GroundAndTubeSpeed;       //地面&水管移动速度（2）
     public float TubeDown1X;             //水管1朝下X坐标（3.3）
     public float TubeDown2X;             //水管1朝下X坐标（6.3）
@@ -73,6 +79,17 @@ public class Data : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		
+	}
+
+	public void upDateLocalHighScore()  //更新本地最高分
+	{
+		LocalHighScore = PlayerPrefs.GetInt("LocalHighScore", 0);
+		if (Nowscore > LocalHighScore) {
+			PlayerPrefs.SetInt ("LocalHighScore", Nowscore);
+			LocalHighScore = PlayerPrefs.GetInt("LocalHighScore", 0);
+			newRecord.SetActive(true);  //新纪录
+		}
+
 	}
     
 }

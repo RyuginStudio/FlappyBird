@@ -227,8 +227,40 @@ public class Bird : MonoBehaviour
 			D_ins.medal.SetActive(true);
 		}
 
-			
+		//显示本地最高分
+		D_ins.upDateLocalHighScore();
+		Debug.Log(D_ins.LocalHighScore);
+
+		char []high_score = D_ins.LocalHighScore.ToString().ToCharArray();
+
+		for (int i = 0; i < high_score.Length; i++)
+		{
+			Texture2D texture2d = (Texture2D)Resources.Load("Pictures/" + high_score[i]);  //更换角色图片  
+			var sprite = Sprite.Create(texture2d, D_ins.now_score1.GetComponent<SpriteRenderer>().sprite.textureRect, new Vector2(0.5f, 0.5f));
+
+			switch (i)  //改位值
+			{
+			case 0:
+				D_ins.high_score1.SetActive(true);
+				D_ins.high_score1.GetComponent<SpriteRenderer>().sprite = sprite;
+				break;
+			case 1:
+				D_ins.high_score2.SetActive(true);
+				D_ins.high_score2.GetComponent<SpriteRenderer>().sprite = sprite;
+				break;
+			case 2:
+				D_ins.high_score3.SetActive(true);
+				D_ins.high_score3.GetComponent<SpriteRenderer>().sprite = sprite;
+				break;
+			case 3:
+				D_ins.high_score4.SetActive(true);
+				D_ins.high_score4.GetComponent<SpriteRenderer>().sprite = sprite;
+				break;
+			}
+		}
+
 	}
+
 
 
 	public void btn_ok_onClick()
