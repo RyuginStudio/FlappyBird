@@ -206,6 +206,28 @@ public class Bird : MonoBehaviour
 			}
 		}
 
+		//奖杯显示: 铜=>10+; 银=>20+; 金=>30+; 铂金=>40+;
+		Sprite sp_medal;
+		Texture2D tex_medal;
+		string path_medal = null;
+		if (D_ins.Nowscore >= 40) {
+			path_medal = "platinum";
+		} else if (D_ins.Nowscore >= 30) {
+			path_medal = "gold";
+		} else if (D_ins.Nowscore >= 20) {
+			path_medal = "silver";
+		} else if (D_ins.Nowscore >= 10) {
+			path_medal = "bronze";
+		}
+
+		if (path_medal != null) {
+			tex_medal = (Texture2D)Resources.Load("Pictures/"+path_medal);
+			sp_medal = Sprite.Create(tex_medal, D_ins.medal.GetComponent<SpriteRenderer>().sprite.textureRect, new Vector2(0.5f, 0.5f));
+			D_ins.medal.GetComponent<SpriteRenderer>().sprite = sp_medal;
+			D_ins.medal.SetActive(true);
+		}
+
+			
 	}
 
 
