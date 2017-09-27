@@ -86,9 +86,9 @@ public class Bird : MonoBehaviour
 		var tempPos = D_ins.sp_bird.transform.position;
 
 		if (moveRoam == false)
-			D_ins.sp_bird.transform.position = new Vector2(tempPos.x, tempPos.y -= 0.005f);
+			D_ins.sp_bird.transform.position = new Vector2(tempPos.x, tempPos.y -= 0.5f * Time.deltaTime);
 		else
-			D_ins.sp_bird.transform.position = new Vector2(tempPos.x, tempPos.y += 0.005f);
+			D_ins.sp_bird.transform.position = new Vector2(tempPos.x, tempPos.y += 0.5f * Time.deltaTime);
 
 		if (Input.GetMouseButtonDown(0))  //获取游戏开始指令
 		{

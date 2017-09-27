@@ -7,6 +7,12 @@ public class LogoScene : MonoBehaviour {
 
     public AudioSource vszed;
 
+	void Awake()
+	{
+		//锁帧:60 只在垂直同步为关的情况下奏效
+		Application.targetFrameRate = 60;
+	}
+
 	// Use this for initialization
 	void Start () {
         Invoke("playSound", 0.5f);
