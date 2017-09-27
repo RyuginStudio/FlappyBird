@@ -12,6 +12,7 @@ public class Data : MonoBehaviour {
     public AudioSource audio_swooshing;
 
     //精灵
+	public GameObject bkg;
     public GameObject sp_ground1;
     public GameObject sp_ground2;
     public GameObject sp_tubeDown1;
@@ -73,7 +74,7 @@ public class Data : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+		randBkg();
     }
 
     // Update is called once per frame
@@ -90,6 +91,21 @@ public class Data : MonoBehaviour {
 			newRecord.SetActive(true);  //新纪录
 		}
 
+	}
+
+	 void randBkg()
+	{
+		int value = Random.Range (0, 100);
+		string path = null;
+		Debug.Log (value);
+		if (value % 2 == 0) {
+			path = "day"; 
+		} else {
+			path = "night";
+		}
+		var texture = (Texture2D)Resources.Load("Pictures/"+path);
+		var sprite = Sprite.Create(texture, bkg.GetComponent<SpriteRenderer>().sprite.textureRect, new Vector2(0.5f, 0.5f));
+		bkg.GetComponent<SpriteRenderer> ().sprite = sprite;
 	}
     
 }
