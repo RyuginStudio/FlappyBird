@@ -9,11 +9,12 @@ using UnityEngine.UI;
 public class Bird : MonoBehaviour
 {
 
-	private int bird_idx = 0;     //鸟帧动画
-	private float currentTime;    //当前时间 
-	private float lastTime;       //上次时间
-	private Data D_ins;           //数据单例
-	bool moveRoam = false;        //漫游上下开关
+	private string birdColor = null;  //鸟颜色
+	private int bird_idx = 0;         //鸟帧动画
+	private float currentTime;        //当前时间 
+	private float lastTime;           //上次时间
+	private Data D_ins;               //数据单例
+	bool moveRoam = false;            //漫游上下开关
 
 
 	private static Bird birdInstance;   //鸟单例
@@ -41,6 +42,12 @@ public class Bird : MonoBehaviour
 		D_ins.now_score2.SetActive(false);
 		D_ins.now_score3.SetActive(false);
 		D_ins.now_score4.SetActive(false);
+
+		//鸟随机颜色
+		birdColor = D_ins.randBirdColor();
+		var texture = (Texture2D)Resources.Load("Pictures/bird_"+birdColor+"_0");
+		var bird_sprite = Sprite.Create(texture, D_ins.sp_bird.GetComponent<SpriteRenderer>().sprite.textureRect, new Vector2(0.5f, 0.5f));
+		D_ins.sp_bird.GetComponent<SpriteRenderer> ().sprite = bird_sprite;
 	}
 
 	void Update()
@@ -66,7 +73,7 @@ public class Bird : MonoBehaviour
 
 			if (currentTime - lastTime > 0.12)   //简易定时器
 			{
-				Texture2D texture2d = (Texture2D)Resources.Load("Pictures/bird_blue_" + bird_idx);  //更换角色图片  
+				Texture2D texture2d = (Texture2D)Resources.Load("Pictures/bird_" + birdColor + "_" + bird_idx);  //更换角色图片  
 				var sprite = Sprite.Create(texture2d, D_ins.sp_bird.GetComponent<SpriteRenderer>().sprite.textureRect, new Vector2(0.5f, 0.5f));
 				D_ins.sp_bird.GetComponent<SpriteRenderer>().sprite = sprite;
 

@@ -97,7 +97,7 @@ public class Data : MonoBehaviour {
 	{
 		int value = Random.Range (0, 100);
 		string path = null;
-		Debug.Log (value);
+
 		if (value % 2 == 0) {
 			path = "day"; 
 		} else {
@@ -106,6 +106,20 @@ public class Data : MonoBehaviour {
 		var texture = (Texture2D)Resources.Load("Pictures/"+path);
 		var sprite = Sprite.Create(texture, bkg.GetComponent<SpriteRenderer>().sprite.textureRect, new Vector2(0.5f, 0.5f));
 		bkg.GetComponent<SpriteRenderer> ().sprite = sprite;
+	}
+
+	public string randBirdColor()
+	{
+		int value = Random.Range (0, 100);
+
+		if (value % 2 == 0) {
+			return "blue"; 
+		} else if (value % 3 == 0) {
+			return "red";
+		} else {
+			return "yellow";
+		}
+
 	}
     
 }
